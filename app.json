@@ -3,6 +3,7 @@
     "name": "mManager",
     "slug": "mManager",
     "version": "1.0.0",
+    "scheme": "mManager",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -19,10 +20,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.mManager"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      ["expo-notifications",
+      {
+        "color": "#9F5BFF"
+      }]
+    ]
   }
 }
