@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View, FlatList, SafeAreaView, StatusBar, Dimensions, TouchableOpacity, Alert, Modal } from "react-native";
+import { StyleSheet, Text, View, FlatList, SafeAreaView, StatusBar, Dimensions, TouchableOpacity, Alert, Modal, Platform } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState, useEffect } from 'react';
-import { 
-  getBalance, 
-  getSavingsTarget, 
-  getTransactions,
-  getSavingsTransfers,
-  clearAllData,
-  getUserInfo,
-  getNotifications,
+import {   
+  getBalance,   
+  getSavingsTarget,   
+  getTransactions,  
+  getSavingsTransfers,  
+  clearAllData,  
+  getUserInfo,  
+  getNotifications,  
   markNotificationAsRead
 } from '../../services/databaseManager.js';
 import { Ionicons } from '@expo/vector-icons';
@@ -114,9 +114,9 @@ const Home = () => {
           text: "Cancel",
           style: "cancel"
         },
-        { 
-          text: "Clear", 
-          onPress: async () => {
+        {
+           text: "Clear",
+           onPress: async () => {
             try {
               const result = await clearAllData();
               if (result.success) {
@@ -165,9 +165,9 @@ const Home = () => {
   };
 
   return (
-    <>
-      <StatusBar barStyle="light-content" backgroundColor="#000000" />
-      <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#000000" translucent={false} />
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.content}>
           {/* Header */}
           <View style={styles.header}>
@@ -175,14 +175,14 @@ const Home = () => {
               <Text style={styles.greetingText}>{getGreeting()}</Text>
               <Text style={styles.usernameText}>{username}</Text>
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity               
               style={styles.notificationButton}
               onPress={toggleNotifications}
             >
-              <Ionicons 
-                name={unreadCount > 0 ? "notifications" : "notifications-outline"} 
-                size={24} 
-                color="#9F5BFF" 
+              <Ionicons                 
+                name={unreadCount > 0 ? "notifications" : "notifications-outline"}                 
+                size={24}                 
+                color="#9F5BFF"               
               />
               {unreadCount > 0 && (
                 <View style={styles.notificationBadge}>
@@ -234,7 +234,7 @@ const Home = () => {
           </Modal>
 
           {/* Balance Card */}
-          <LinearGradient 
+          <LinearGradient             
             style={styles.balanceCard}
             colors={['#9F5BFF', '#8229FF']}
             start={{ x: 0, y: 0 }}
@@ -265,25 +265,25 @@ const Home = () => {
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Recent Transactions</Text>
               <View style={styles.buttonsContainer}>
-                <TouchableOpacity 
-                  onPress={handleClearData} 
+                <TouchableOpacity                   
+                  onPress={handleClearData}                   
                   style={styles.actionButton}
                 >
-                  <Ionicons 
-                    name="trash-outline" 
-                    size={20} 
-                    color="#FF6B6B" 
+                  <Ionicons                     
+                    name="trash-outline"                     
+                    size={20}                     
+                    color="#FF6B6B"                   
                   />
                 </TouchableOpacity>
-                <TouchableOpacity 
-                  onPress={handleRefresh} 
+                <TouchableOpacity                   
+                  onPress={handleRefresh}                   
                   style={styles.actionButton}
                   disabled={refreshing}
                 >
-                  <Ionicons 
-                    name="refresh" 
-                    size={20} 
-                    color={refreshing ? "#999999" : "#9F5BFF"} 
+                  <Ionicons                     
+                    name="refresh"                     
+                    size={20}                     
+                    color={refreshing ? "#999999" : "#9F5BFF"}                   
                   />
                 </TouchableOpacity>
               </View>
@@ -313,7 +313,7 @@ const Home = () => {
           </View>
         </View>
       </SafeAreaView>
-    </>
+    </View>
   );
 };
 
@@ -321,6 +321,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
     flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
   },
   content: {
     padding: 20,
